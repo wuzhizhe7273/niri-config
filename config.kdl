@@ -21,3 +21,4 @@ include "./noctalia.kdl"     // 主题颜色 / Theme colors (焦点环、边框�
 
 // 注意：noctalia.kdl 放在最后，确保颜色设置覆盖 layout.kdl 中的焦点环/阴影等结构定义。
 // Note: noctalia.kdl is last so its color settings override the structural layout defaults.
+include "./animations/burn-ashes.kdl"

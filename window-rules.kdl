@@ -167,3 +167,12 @@ window-rule {
     // Open as a floating window so the lyrics bar floats above the desktop
     open-floating true
 }
+
+window-rule {
+    match app-id="org.cockpit_project.CockpitClient"
+    // 轻微透明 / Slight transparency
+    opacity 0.75
+    background-effect {
+        blur true
+    }
+}
