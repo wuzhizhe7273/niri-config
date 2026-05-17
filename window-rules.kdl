@@ -1,0 +1,169 @@
+// =============================================================================
+// 窗口规则 / Window Rules
+//
+// 根据应用 ID 和窗口标题匹配特定窗口，并应用自定义外观/行为规则。
+// Match specific windows by app-id and title, then apply custom appearance/behavior.
+//
+// 匹配说明 / Matching:
+//   app-id   — 应用的 Wayland/X11 标识符，可用正则 r#"..."#
+//   title    — 窗口标题，支持正则匹配
+//
+// 可用选项 / Available options:
+//   open-floating          — 启动时以浮动模式打开
+//   default-floating-position — 浮动窗口的默认位置
+//   opacity                — 透明度 (0.0 = 全透明, 1.0 = 完全不透明)
+//   draw-border-with-background — 是否用窗口背景色填充边框区域
+//   geometry-corner-radius — 窗口圆角半径（像素）
+//   clip-to-geometry       — 裁剪窗口内容到圆角边界
+//   block-out-from              — 阻止特定捕获方式（screencast/screen-capture）
+//   background-effect      — 背景效果（blur/xray）
+// =============================================================================
+
+// ── 全局默认 / Global Defaults ──
+// 应用于所有未被子规则覆盖的窗口
+// Applied to all windows unless overridden by more specific rules
+window-rule {
+    // 边框区域不绘制窗口背景色，使圆角区域可见真实桌面背景
+    // Don't fill the border area with window background, so rounded corners show the real desktop
+    draw-border-with-background false
+
+    // 圆角半径 12px，柔和且不突兀
+    // Corner radius of 12px — soft and unobtrusive
+    geometry-corner-radius 12
+
+    // 裁剪窗口内容到圆角形状，防止直角内容溢出
+    // Clip window content to the rounded corner shape
+    clip-to-geometry true
+
+    // 背景效果：默认关闭 X-ray 效果
+    // xray=true 会使窗口背景半透明，露出桌面壁纸
+    // xray=true would make window backgrounds translucent to show the wallpaper
+    background-effect {
+        xray false
+    }
+}
+
+// ── Zed 编辑器 / Zed Editor ──
+window-rule {
+    match app-id="dev.zed.Zed"
+    background-effect {
+        blur true
+    }
+}
+
+// ── Rio 终端 / Rio Terminal ──
+window-rule {
+    match app-id="rio"
+    // 终端通常不需要模糊背景，保持清晰文字渲染
+    // Terminal usually doesn't need background blur for crisp text rendering
+    background-effect {
+        // blur true
+    }
+}
+
+// —— Alacritty 终端 / Alacritty Terminal ──
+window-rule {
+    match app-id="Alacritty"
+    background-effect {
+        blur true
+    }
+
+}
+
+// —— Firefox  / Firefox
+window-rule {
+    match app-id=r#"firefox$"#
+    match title="^Firefox$"
+    opacity 0.9
+    background-effect {
+        blur true
+    }
+}
+// ── Firefox 画中画 / Firefox Picture-in-Picture ──
+// 将 Firefox 的画中画窗口设置为浮动模式，使其悬浮在其他窗口之上
+// Make Firefox PiP windows float above other windows
+window-rule {
+    // 匹配英文与中文的"画中画"窗口标题（含正则模糊匹配）
+    // Match both English and Chinese PiP window titles (with regex fuzzy match)
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"firefox$"# title="^画中画"
+    match app-id=r#"firefox$"# title="^画中画播放器"
+    match app-id=r#"firefox$"# title=".*[Pp]icture.*[Ii]n.*[Pp]icture.*"
+    open-floating true
+}
+
+// —— Zen Browser/ 禅浏览器
+window-rule {
+    match app-id="zen"
+    match title=r#"^Zen Browser$"#
+    background-effect {
+        blur true
+    }
+}
+
+// ── 密码管理器 / Password Managers ──
+// 防止屏幕录制/截图工具捕获密码管理器窗口内容，保护隐私安全
+// Prevent screencast/screenshot tools from capturing password manager content
+window-rule {
+    // KeePassXC 密码管理器
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    // GNOME Secrets (也叫 Passwords and Keys)
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+    block-out-from "screencast"
+    opacity 0.8
+    background-effect {
+        blur true
+    }
+}
+
+// ── Visual Studio Code ──
+window-rule {
+    match app-id="code"
+    // VS Code 使用服务端装饰，边框区域不绘制背景以保持圆角
+    // VS Code uses server-side decorations; don't draw background in border area for rounded corners
+    draw-border-with-background false
+
+    // 轻微透明效果 / Slight transparency
+    opacity 0.8
+    background-effect {
+        blur true
+    }
+}
+
+// ── JetBrains Toolbox ──
+window-rule {
+    match app-id="jetbrains-toolbox"
+    // 轻微透明 / Slight transparency
+    opacity 0.9
+
+    // 默认浮动位置：屏幕右上角，距顶和右侧各 16px
+    // Default floating position: top-right corner, 16px from top and right edges
+    default-floating-position x=0 y=16 relative-to="top-right"
+}
+
+// ── Mihomo Party (代理工具 / Proxy Tool) ──
+window-rule {
+    match app-id="mihomo-party"
+    match title="Clash Party"
+    // 轻微透明 / Slight transparency
+    opacity 0.8
+    background-effect {
+        blur true
+    }
+}
+window-rule {
+    match app-id="mihomo-party" title="^Clash Party Floating$"
+    // 浮动位置：右上角 / Floating position: top-right
+    default-floating-position x=0 y=16 relative-to="top-right"
+
+    // 高度透明，减少视觉干扰 / Highly transparent to reduce visual distraction
+    opacity 0.7
+}
+
+// ── Waylyrics (桌面歌词 / Desktop Lyrics) ──
+window-rule {
+    match app-id="waylyrics"
+    // 以浮动窗口启动，歌词条悬浮在桌面上
+    // Open as a floating window so the lyrics bar floats above the desktop
+    open-floating true
+}

@@ -1,0 +1,54 @@
+// =============================================================================
+// 输入设备配置 / Input Devices Configuration
+// =============================================================================
+
+input {
+    // ── 键盘 / Keyboard ──
+    keyboard {
+        // XKB 键盘布局设置
+        xkb {
+            // 美式英语键盘布局
+            // US English keyboard layout
+            layout "us"
+            // 如需添加中文输入，可增加: options "grp:win_space_toggle" 和额外的 layout
+            // For Chinese input, add: options "grp:win_space_toggle" + extra layout
+        }
+        // 启动时自动开启 NumLock 数字锁定键
+        // Automatically enable NumLock on startup
+        numlock
+    }
+
+    // ── 触摸板 / Touchpad ──
+    touchpad {
+        // 启用轻触点击（手指轻触触摸板即视为点击）
+        // Enable tap-to-click (a light tap on the touchpad registers as a click)
+        tap
+        // 打字时禁用触摸板，防止误触导致光标跳动
+        // Disable touchpad while typing to prevent accidental cursor movement
+        dwt
+        // 使用指点杆时也禁用触摸板
+        // Also disable touchpad while using the TrackPoint
+        dwtp
+        // 自然滚动（又称反向滚动）：手指向上滑动时内容向下滚动，类似手机触屏体验
+        // Natural (reverse) scrolling: swipe up to scroll down, like on a touchscreen
+        natural-scroll
+    }
+
+    // ── 鼠标 / Mouse ──
+    // 当前使用默认设置，可在此添加加速度、速度等配置
+    // Currently using defaults; acceleration/speed can be configured here
+    mouse {
+    }
+
+    // ── 指点杆 (TrackPoint) / TrackPoint ──
+    // ThinkPad 等笔记本的指点杆设置
+    // Settings for laptop pointing sticks (e.g. ThinkPad TrackPoint)
+    trackpoint {
+    }
+
+    // 焦点切换时自动将鼠标移动到新聚焦的窗口内。
+    // 默认行为：分别沿水平/垂直方向最小化移动光标，使其进入窗口范围（不一定居中）。
+    // Warp the mouse to newly focused windows.
+    // By default, warps minimally per axis to put the cursor inside the window (not necessarily to center).
+    warp-mouse-to-focus
+}

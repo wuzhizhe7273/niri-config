@@ -1,0 +1,23 @@
+// =============================================================================
+// Niri 主配置文件 — 模块化组织
+// Niri Main Config — Modular Structure
+//
+// 每个 include 文件负责一个独立的功能领域，便于维护和调整。
+// Each included file manages a single concern, keeping configuration organized.
+//
+// 文件加载顺序决定覆盖关系：后加载的同名配置项会覆盖先加载的。
+// Load order determines override behavior: later files override earlier ones for duplicate settings.
+// =============================================================================
+
+include "settings.kdl"       // 基础设置 / Basic settings (截图路径、光标、环境变量等)
+include "input.kdl"          // 输入设备 / Input devices (键盘布局、触摸板、鼠标等)
+include "layout.kdl"         // 布局结构 / Layout structure (间距、列宽、焦点环、阴影)
+include "binds.kdl"          // 快捷键 / Key bindings (应用启动、窗口管理、工作区等)
+include "startup.kdl"        // 自启动程序 / Auto-start applications
+include "debug.kdl"          // 调试选项 / Debug options
+include "window-rules.kdl"   // 窗口规则 / Window rules (透明度、浮动、圆角等)
+include "layer-rules.kdl"    // 图层规则 / Layer-shell rules (叠加层、通知等)
+include "./noctalia.kdl"     // 主题颜色 / Theme colors (焦点环、边框、阴影、标签指示器)
+
+// 注意：noctalia.kdl 放在最后，确保颜色设置覆盖 layout.kdl 中的焦点环/阴影等结构定义。
+// Note: noctalia.kdl is last so its color settings override the structural layout defaults.

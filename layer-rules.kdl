@@ -1,0 +1,23 @@
+// =============================================================================
+// 图层规则 / Layer-shell Rules
+//
+// Layer-shell 是 Wayland 协议，用于通知面板、叠加层、壁纸等
+// 不属于正常窗口管理范围的特殊表面。
+// Layer-shell is a Wayland protocol for special surfaces like
+// notification panels, overlays, wallpapers that live outside normal window management.
+//
+// place-within-backdrop: 将图层表面放入总览模式和工作区切换时显示的背景遮罩中。
+// 仅对忽略独占区的 "background" 层表面生效（如壁纸工具）。遮罩内的图层会忽略所有输入。
+// place-within-backdrop: places the surface into the backdrop visible in the Overview
+// and between workspaces. Only works for "background" layer surfaces that ignore
+// exclusive zones (e.g. wallpaper tools). Layers within the backdrop ignore all input.
+// =============================================================================
+
+layer-rule {
+    // 匹配所有以 "noctalia-overview" 开头的命名空间
+    // 注意：正则中的 * 只作用于前一个字符 w；如需匹配任意后缀请改用 .*
+    // Match all namespaces starting with "noctalia-overview"
+    // Note: * in regex applies only to 'w' (zero or more); use .* to match any suffix
+    match namespace="^noctalia-overview*"
+    place-within-backdrop true
+}

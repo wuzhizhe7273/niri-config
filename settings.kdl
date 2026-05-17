@@ -1,0 +1,42 @@
+// =============================================================================
+// 基础设置 / Basic Settings
+// =============================================================================
+
+// 截图保存路径，支持 strftime 格式的时间占位符。
+// Screenshot save path with strftime-compatible placeholders.
+// %Y=年 year, %m=月 month, %d=日 day, %H=时 hour, %M=分 minute, %S=秒 second
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// 请求应用省略客户端装饰 (CSD)，由 niri 统一绘制边框和焦点环。
+// 若应用明确要求 CSD，该请求仍会被遵重。同时告知应用其处于平铺状态以移除圆角。
+// Ask apps to omit client-side decorations, so niri draws unified borders/focus-rings.
+// Apps that explicitly request CSD will still get it. Also informs apps they are tiled.
+prefer-no-csd
+
+// ── 光标 / Cursor ──
+cursor {
+    // XCursor 主题名称。Bibata-Modern-Ice 是一款现代风格的光标主题。
+    // XCursor theme name. Bibata-Modern-Ice is a modern cursor theme.
+    xcursor-theme "Bibata-Modern-Ice"
+    // 光标大小（像素）。24 是中等偏大的尺寸。
+    // Cursor size in pixels. 24 is a moderately large size.
+    xcursor-size 24
+}
+
+// ── 环境变量 / Environment Variables ──
+// 这些变量会注入到所有 niri 启动的进程（包括 spawn 和 spawn-at-startup）。
+// These variables are injected into all processes launched by niri.
+environment {
+    // 强制 Qt 应用使用 Wayland 后端，避免回退到 XWayland。
+    // Force Qt applications to use the Wayland backend instead of falling back to XWayland.
+    QT_QPA_PLATFORM "wayland"
+}
+
+// ── 热键叠加层 / Hotkey Overlay ──
+// 按下 Mod 键时弹出的快捷键提示窗口。
+// The overlay that shows keyboard shortcuts when holding the Mod key.
+hotkey-overlay {
+    // 启动时不自动弹出叠加层。
+    // Don't automatically show the overlay on startup.
+    skip-at-startup
+}

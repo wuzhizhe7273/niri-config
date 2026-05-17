@@ -1,0 +1,66 @@
+// =============================================================================
+// 布局结构配置 / Layout Structure
+// 仅包含布局尺寸和结构参数；颜色主题在 noctalia.kdl 中定义。
+// Contains only structural/size params; colors are defined in noctalia.kdl.
+// =============================================================================
+
+layout {
+    // 窗口之间的间距（像素）。设得稍大一些以减少视觉拥挤。
+    // Gap between windows in pixels. Set slightly larger for visual breathing room.
+    gaps 16
+
+    // 居中聚焦列的行为：
+    //   "never"      — 从不居中
+    //   "on-overflow" — 当列宽超过可用空间时才居中（推荐，避免不必要的移动）
+    //   "always"     — 始终居中，可能包含动画
+    // When to center the focused column:
+    //   "never"      — never center
+    //   "on-overflow" — center only when columns overflow available space (recommended)
+    //   "always"     — always center, may include animation
+    center-focused-column "on-overflow"
+
+    // ── 预设列宽 / Preset Column Widths ──
+    // 用 Mod+R 循环切换这些预设比例。比例值是相对于屏幕宽度的分数。
+    // Cycle through these with Mod+R. Each proportion is relative to the screen width.
+    preset-column-widths {
+        proportion 0.25      // ¼ 屏宽 / quarter screen
+        proportion 0.33333   // ⅓ 屏宽 / one third
+        proportion 0.5       // ½ 屏宽 / half screen
+        proportion 0.66667   // ⅔ 屏宽 / two thirds
+        proportion 0.75      // ¾ 屏宽 / three quarters
+        proportion 1.0       // 全屏宽 / full screen
+    }
+
+    // ── 预设窗口高度 / Preset Window Heights ──
+    // 用 Mod+Shift+R 循环切换。仅在非全高模式下生效。
+    // Cycle through these with Mod+Shift+R. Only applies when window is not in full-height mode.
+    preset-window-heights {
+        proportion 0.25
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 0.75
+        proportion 1.0
+    }
+
+    // 新列的默认宽度。每个新打开的窗口会创建一个新列，初始宽度为此值。
+    // Default width for new columns. Each new window creates a new column at this width.
+    default-column-width { proportion 0.5; }
+
+    // ── 焦点环 / Focus Ring ──
+    // 当前聚焦窗口周围的高亮边框。颜色在 noctalia.kdl 中设置。
+    // The highlight border around the currently focused window. Colors set in noctalia.kdl.
+    focus-ring {
+        width 4   // 环线宽度（像素）
+    }
+
+    // ── 窗口阴影 / Window Shadow ──
+    // 为所有窗口添加投影，增强层次感。
+    // Adds drop shadow to all windows for visual depth.
+    shadow {
+        on                     // 开启阴影
+        softness 36            // 阴影柔和度（模糊半径），值越大阴影越柔和
+        spread 8               // 扩散范围，正值向外扩散，负值向内收缩
+        offset x=0 y=6         // 偏移量：水平不偏移，垂直向下偏移 6px（模拟顶部光源）
+    }
+}
