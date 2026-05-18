@@ -21,3 +21,8 @@ layer-rule {
     match namespace="^noctalia-overview*"
     place-within-backdrop true
 }
+
+layer-rule {
+    match namespace="linux-wallpaperengine"
+    // place-within-backdrop true
+}

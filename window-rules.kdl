@@ -176,3 +176,13 @@ window-rule {
         blur true
     }
 }
+
+// Foliate (电子书阅读器 / eBook Reader)
+window-rule {
+    match app-id="com.github.johnfactotum.Foliate"
+    // 轻微透明 / Slight transparency
+    opacity 0.8
+    background-effect {
+        blur true
+    }
+}
