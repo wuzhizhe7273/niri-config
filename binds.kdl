@@ -22,7 +22,7 @@ binds {
 
     // 打开终端模拟器 rio
     // Open the rio terminal emulator
-    Mod+T hotkey-overlay-title="打开终端: rio / Open Terminal: rio" { spawn "rio"; }
+    Mod+T hotkey-overlay-title="打开终端: Ghostty / Open Terminal: Ghostty" { spawn "ghostty"; }
 
     // 打开 Noctalia 应用启动器
     // Open the Noctalia application launcher
