@@ -1,5 +1,5 @@
-// explodes in varied patterns. Screen has a light orange flash for
-// *dramatic effect* - inspired by C&C Red Alert
+// Explode — windows burst into fire and debris particles on close,
+// with asymmetric explosion patterns inspired by C&C Red Alert.
 
 animations {
     window-open {

@@ -4,11 +4,7 @@
 // These programs run automatically when niri starts.
 // =============================================================================
 
-// Noctalia Shell — 桌面外壳/面板
-// Noctalia Shell — Desktop shell/panel
-// --no-duplicate 确保不会重复启动已有实例
-// --no-duplicate prevents launching duplicate instances if already running
-spawn-at-startup "qs" "-c" "noctalia-shell" "--no-duplicate"
+spawn-at-startup "noctalia"
 
 // niri-float-sticky — 浮动粘性窗口插件
 // niri-float-sticky — Floating sticky window plugin

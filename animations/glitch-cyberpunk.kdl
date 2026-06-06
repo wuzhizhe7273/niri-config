@@ -1,5 +1,5 @@
-// Glitch Cyberpunk! Red-tinted chromatic aberration with neon glow.
-// Digital corruption effect inspired by cyberpunk.
+// Glitch Cyberpunk — red-tinted chromatic aberration with neon glow,
+// CRT scanlines, RGB split, and digital corruption effects.
 
 animations {
     window-open {

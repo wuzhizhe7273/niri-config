@@ -7,7 +7,7 @@
 layout {
     // 窗口之间的间距（像素）。设得稍大一些以减少视觉拥挤。
     // Gap between windows in pixels. Set slightly larger for visual breathing room.
-    gaps 16
+    gaps 12
 
     // 居中聚焦列的行为：
     //   "never"      — 从不居中

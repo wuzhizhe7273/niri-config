@@ -5,7 +5,7 @@
 // Mod defaults to the Super key (Windows/Command key).
 //
 // 修饰键说明 / Modifier key reference:
-//   Mod   = Super (Windows/Command)
+//   Mod   = Super
 //   Ctrl  = Control
 //   Alt   = Alt
 //   Shift = Shift
@@ -16,24 +16,22 @@ binds {
     // 应用启动 / Application Launch
     // ════════════════════════════════════════════════════════════════════════
 
-    // 打开会话菜单：退出、锁屏、重启等操作入口
-    // Open session menu: exit, lock, restart, etc.
-    Mod+X hotkey-overlay-title="打开会话菜单 / Open Session Menu" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
+    // 会话菜单 / Session menu
+    Mod+X hotkey-overlay-title="打开会话菜单 / Open Session Menu" { spawn-sh "noctalia msg panel-toggle session"; }
 
-    // 打开终端模拟器 rio
-    // Open the rio terminal emulator
+    // 终端 / Terminal
     Mod+T hotkey-overlay-title="打开终端: Ghostty / Open Terminal: Ghostty" { spawn "ghostty"; }
 
-    // 打开 Noctalia 应用启动器
-    // Open the Noctalia application launcher
-    Mod+D hotkey-overlay-title="打开启动器: Noctalia Launcher / Open Launcher: Noctalia Launcher" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    // 应用启动器 / Application launcher
+    Mod+D hotkey-overlay-title="打开启动器: Noctalia Launcher / Open Launcher: Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
 
-    // 立即锁屏
-    // Lock the screen immediately
-    Super+Alt+L hotkey-overlay-title="锁屏: Noctalia Lock Screen / Lock Screen: Noctalia Lock Screen" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+    // 剪贴板 / Clipboard
+    Mod+B hotkey-overlay-title="打开剪贴板: Noctalia Clipboard / Open Clipboard: Noctalia Clipboard" { spawn-sh "noctalia msg panel-toggle clipboard"; }
 
-    // 查看当前所有快捷键的速查表
-    // View a cheatsheet of all current keybindings
+    // 锁屏 / Lock screen
+    Super+Alt+L hotkey-overlay-title="锁屏: Noctalia Lock Screen / Lock Screen: Noctalia Lock Screen" { spawn-sh "noctalia msg session lock"; }
+
+    // 快捷键速查表 / Keybind cheatsheet
     Mod+F1 hotkey-overlay-title="查看快捷键 / View Keybindings" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "plugin:keybind-cheatsheet" "toggle"; }
 
     // ════════════════════════════════════════════════════════════════════════
@@ -41,38 +39,18 @@ binds {
     // ════════════════════════════════════════════════════════════════════════
 
     // ── 音量 / Volume ──
-    // 使用 WirePlumber (wpctl) 控制 PipeWire 音频。allow-when-locked 允许锁屏时也生效。
-    // Uses WirePlumber (wpctl) to control PipeWire audio. allow-when-locked allows use even when screen is locked.
-
-    // 提高音量 10%，上限 100%（1.0）
-    // Raise volume by 10%, capped at 100% (1.0)
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
-
-    // 降低音量 10%
-    // Lower volume by 10%
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-
-    // 切换静音状态 (扬声器)
-    // Toggle mute (speaker)
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-
-    // 切换静音状态 (麦克风)
-    // Toggle mute (microphone)
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
     // ── 媒体播放 / Media Playback ──
-    // playerctl 控制 MPRIS 兼容的媒体播放器（如 Spotify、浏览器中的 YouTube 等）。
-    // playerctl controls MPRIS-compatible media players (Spotify, YouTube in browser, etc.)
-
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPlay  allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop  allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev  allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext  allow-when-locked=true { spawn-sh "playerctl next"; }
 
     // ── 屏幕亮度 / Screen Brightness ──
-    // brightnessctl 控制背光亮度。class=backlight 指定控制的是背光而非键盘背光等。
-    // brightnessctl controls backlight. class=backlight ensures we target the display backlight.
-
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
@@ -80,21 +58,14 @@ binds {
     // 窗口管理 / Window Management
     // ════════════════════════════════════════════════════════════════════════
 
-    // 切换总览模式 / Toggle overview (expose all windows)
-    // repeat=false 防止长按重复触发 / prevents repeated triggering when holding the key
     Mod+O repeat=false { toggle-overview; }
-
-    // 关闭当前聚焦窗口 / Close the focused window
     Mod+Q repeat=false { close-window; }
 
     // ── 焦点移动 / Focus Movement ──
-    // 方向键和 Vim 风格 (HJKL) — 二者效果相同
-    // Arrow keys and Vim-style (HJKL) — both do the same thing
-    // Left/H 列左, Down/J 窗口下, Up/K 窗口上, Right/L 列右
-    // Home/End 跳转到首尾列
-
-    Mod+Home { focus-column-first; }
-    Mod+End  { focus-column-last; }
+    // 方向键和 Vim 风格 (HJKL) — 效果相同
+    // Arrow keys and Vim-style (HJKL) — both do the same
+    Mod+Home  { focus-column-first; }
+    Mod+End   { focus-column-last; }
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
@@ -105,11 +76,8 @@ binds {
     Mod+L     { focus-column-right; }
 
     // ── 窗口/列移动 / Move Windows/Columns ──
-    // Mod+Ctrl + 方向/Vim：移动当前列或窗口
-    // Mod+Ctrl + arrows/Vim: move the current column or window
-
-    Mod+Ctrl+Home { move-column-to-first; }
-    Mod+Ctrl+End  { move-column-to-last; }
+    Mod+Ctrl+Home  { move-column-to-first; }
+    Mod+Ctrl+End   { move-column-to-last; }
     Mod+Ctrl+Left  { move-column-left; }
     Mod+Ctrl+Down  { move-window-down; }
     Mod+Ctrl+Up    { move-window-up; }
@@ -123,8 +91,7 @@ binds {
     // 显示器管理 / Monitor Management
     // ════════════════════════════════════════════════════════════════════════
 
-    // Mod+Shift + 方向/Vim：切换聚焦到相邻显示器
-    // Mod+Shift + arrows/Vim: move focus to an adjacent monitor
+    // ── 显示器焦点 / Monitor Focus ──
     Mod+Shift+Left  { focus-monitor-left; }
     Mod+Shift+Down  { focus-monitor-down; }
     Mod+Shift+Up    { focus-monitor-up; }
@@ -134,8 +101,7 @@ binds {
     Mod+Shift+K     { focus-monitor-up; }
     Mod+Shift+L     { focus-monitor-right; }
 
-    // Mod+Shift+Ctrl + 方向/Vim：将当前列移动到相邻显示器
-    // Mod+Shift+Ctrl + arrows/Vim: move the current column to an adjacent monitor
+    // ── 移动列到显示器 / Move Column to Monitor ──
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
     Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
@@ -149,27 +115,25 @@ binds {
     // 工作区管理 / Workspace Management
     // ════════════════════════════════════════════════════════════════════════
 
-    // 切换工作区焦点 / Switch workspace focus
+    // ── 切换工作区 / Switch Workspace ──
     Mod+Page_Down { focus-workspace-down; }
     Mod+Page_Up   { focus-workspace-up; }
     Mod+U         { focus-workspace-down; }
     Mod+I         { focus-workspace-up; }
 
-    // 将当前聚焦窗口移动到相邻工作区 / Move focused window to adjacent workspace
+    // ── 移动窗口到工作区 / Move Window to Workspace ──
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
     Mod+Shift+U         { move-workspace-down; }
     Mod+Shift+I         { move-workspace-up; }
 
-    // 将当前整个列移动到相邻工作区 / Move entire current column to adjacent workspace
+    // ── 移动列到工作区 / Move Column to Workspace ──
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
     Mod+Ctrl+I         { move-column-to-workspace-up; }
 
-    // ── 按编号切换工作区 / Switch to Workspace by Number ──
-    // Mod+1-9 直接跳到指定编号的工作区
-    // Mod+1-9 jumps directly to the numbered workspace
+    // ── 按编号切换工作区 / Workspace by Number ──
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
@@ -180,8 +144,7 @@ binds {
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
 
-    // Mod+Ctrl+1-9 将当前列移动到指定编号的工作区
-    // Mod+Ctrl+1-9 moves the current column to the numbered workspace
+    // ── 移动列到指定编号工作区 / Move Column to Workspace by Number ──
     Mod+Ctrl+1 { move-column-to-workspace 1; }
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
@@ -192,10 +155,7 @@ binds {
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
 
-    // ── 鼠标滚轮控制工作区和列 / Mouse Wheel Workspace & Column Control ──
-    // cooldown-ms=150 防止滚轮滚动过快导致连续切换多个工作区
-    // cooldown-ms=150 prevents accidentally skipping multiple workspaces when scrolling fast
-
+    // ── 鼠标滚轮 / Mouse Wheel ──
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
@@ -206,101 +166,63 @@ binds {
     Mod+Ctrl+WheelScrollRight { move-column-right; }
     Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 
-    // 部分用户习惯用 Shift+滚轮切换列（垂直滚轮→水平切换）
-    // Some users prefer Shift+Wheel to change columns (vertical wheel → horizontal switching)
     Mod+Shift+WheelScrollDown      { focus-column-right; }
     Mod+Shift+WheelScrollUp        { focus-column-left; }
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
     // ════════════════════════════════════════════════════════════════════════
-    // 列与布局操作 / Column & Layout Operations
+    // 列与布局操作 / Column & Layout
     // ════════════════════════════════════════════════════════════════════════
 
-    // 窗口合并/分离：将当前窗口合并到左侧/右侧的列中，或从中分离出来
-    // Consume/expel: merge the current window into the left/right column, or detach it
+    // ── 合并/分离 / Consume & Expel ──
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Comma        { consume-window-into-column; }
+    Mod+Period       { expel-window-from-column; }
 
-    // 强制合并到列 / Force consume into column
-    Mod+Comma  { consume-window-into-column; }
+    // ── 列宽 / Column Width ──
+    Mod+R        { switch-preset-column-width; }
+    Mod+Minus    { set-column-width "-10%"; }
+    Mod+Equal    { set-column-width "+10%"; }
 
-    // 强制从列中分离 / Force expel from column
-    Mod+Period { expel-window-from-column; }
-
-    // ── 列宽和窗口高度调整 / Column Width & Window Height ──
-
-    // 循环切换预设列宽 / Cycle through preset column widths
-    Mod+R       { switch-preset-column-width; }
-
-    // 循环切换预设窗口高度 / Cycle through preset window heights
-    Mod+Shift+R { switch-preset-window-height; }
-
-    // 重置窗口高度为默认（全高） / Reset window height to default (full height)
-    Mod+Ctrl+R  { reset-window-height; }
-
-    // 最大化当前列（填满屏幕宽度） / Maximize column (fill screen width)
-    Mod+F       { maximize-column; }
-
-    // 全屏当前窗口 / Fullscreen the current window
-    Mod+Shift+F { fullscreen-window; }
-
-    // 在保持其他列不变的情况下展开当前列以填充可用空间
-    // Expand current column to fill available width without shrinking others
-    Mod+Ctrl+F  { expand-column-to-available-width; }
-
-    // 居中当前列在屏幕中 / Center the current column on screen
-    Mod+C     { center-column; }
-
-    // 居中所有可见列 / Center all visible columns
-    Mod+Ctrl+C { center-visible-columns; }
-
-    // 逐级调整列宽 / Fine-tune column width (±10%)
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Equal { set-column-width "+10%"; }
-
-    // 逐级调整窗口高度 / Fine-tune window height (±10%)
+    // ── 窗口高度 / Window Height ──
+    Mod+Shift+R     { switch-preset-window-height; }
+    Mod+Ctrl+R      { reset-window-height; }
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
 
-    // 切换窗口浮动状态 / Toggle window floating (detached from tiling layout)
+    // ── 列操作 / Column Operations ──
+    Mod+F      { maximize-column; }
+    Mod+Ctrl+F { expand-column-to-available-width; }
+    Mod+C      { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // ── 窗口操作 / Window Operations ──
+    Mod+Shift+F { fullscreen-window; }
     Mod+V       { toggle-window-floating; }
-
-    // 在浮动窗口和平铺窗口之间切换焦点 / Switch focus between floating and tiling windows
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
-
-    // 切换列的标签页显示模式 / Toggle column tabbed display mode
     Mod+W       { toggle-column-tabbed-display; }
 
     // ════════════════════════════════════════════════════════════════════════
     // 截图 / Screenshots
     // ════════════════════════════════════════════════════════════════════════
 
-    // 交互式区域截图 / Interactive area screenshot
-    Print      { screenshot; }
-
-    // 截取整个屏幕 / Screenshot the entire screen
-    Ctrl+Print { screenshot-screen; }
-
-    // 截取当前聚焦窗口 / Screenshot the focused window
-    Alt+Print  { screenshot-window; }
+    Print       { screenshot; }
+    Ctrl+Print  { screenshot-screen; }
+    Alt+Print   { screenshot-window; }
 
     // ════════════════════════════════════════════════════════════════════════
     // 系统操作 / System Operations
     // ════════════════════════════════════════════════════════════════════════
 
-    // 切换键盘快捷键抑制模式。
-    // 开启后所有 niri 快捷键被抑制，让应用可以捕获所有按键（如游戏、虚拟机）。
-    // allow-inhibiting=false 使此绑定始终忽略抑制，即使抑制开启时也由 niri 处理。
-    // Toggle keyboard shortcut inhibition.
-    // When on, all niri shortcuts are suppressed so apps can capture keys (games, VMs).
-    // allow-inhibiting=false makes this bind ALWAYS handled by niri, ignoring inhibition.
+    // 切换快捷键抑制 / Toggle keyboard shortcuts inhibit
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-    // 退出 niri (退出会话) / Quit niri (end the session)
-    Mod+Shift+E { quit; }
+    // 退出 niri / Quit
+    Mod+Shift+E   { quit; }
     Ctrl+Alt+Delete { quit; }
 
-    // 关闭所有显示器（节能模式） / Turn off all monitors (power saving)
+    // 关闭显示器 / Power off monitors
     Mod+Shift+P { power-off-monitors; }
 }

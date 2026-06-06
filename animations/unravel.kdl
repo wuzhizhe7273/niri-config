@@ -1,4 +1,5 @@
-//Original written by; https://github.com/XansiVA
+// Unravel — window opens by expanding a horizontal line from center outward
+// and closes by collapsing back to a line. Originally by: https://github.com/XansiVA
 
 animations {
     workspace-switch {

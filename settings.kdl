@@ -40,3 +40,18 @@ hotkey-overlay {
     // Don't automatically show the overlay on startup.
     skip-at-startup
 }
+
+// ── 调试选项 / Debug Options ──
+debug {
+    // 接受带有无效序列号的 XDG Activation 请求。
+    // Discord、Telegram 等应用在点击托盘图标或通知时会创建新的 activation 令牌，
+    // 这些令牌通常带有无效序列号。默认情况下 niri 会忽略它们以防止窗口随意抢占焦点，
+    // 启用此选项可使其正常工作。
+    //
+    // Honor XDG Activation requests even with invalid serial numbers.
+    // Apps like Discord and Telegram create fresh activation tokens when clicking
+    // tray icons or notifications, which often have invalid serials. By default,
+    // niri ignores these to prevent windows from randomly stealing focus.
+    // Enabling this flag allows such apps to properly gain focus.
+    honor-xdg-activation-with-invalid-serial
+}

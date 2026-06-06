@@ -1,3 +1,7 @@
+// Pop & Drop — windows zoom in with a pop effect on open,
+// fall and rotate out on close. Spring animations for workspace/movement.
+// Close animation originally by Lemmy: https://github.com/ItsLemmy
+
 animations {
     workspace-switch {
         spring damping-ratio=0.85 stiffness=700 epsilon=0.0001
